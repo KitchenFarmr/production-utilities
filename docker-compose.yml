@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  backend:
+    restart: always
+    container_name: backend
+    image: starlightromero/kitchenfarmr-backend
+    networks:
+      - kitchenfarmr-network
+
+  frontend:
+    restart: always
+    container_name: frontend
+    image: starlightromero/kitchenfarmr-frontend
+    networks:
+      - kitchenfarmr-network
+    depends_on:
+      - backend
+
+  nginx:
+    restart: always
+    container_name: nginx
+    image: starlightromero/kitchenfarmr-nginx
+    ports:
+      - 80:80
+    #   - 443:443
+    # volumes:
+    #   - /root/certs-data/:/data/letsencrypt/
+    #   - /etc/letsencrypt/:/etc/letsencrypt/
+    networks:
+      - kitchenfarmr-network
+    depends_on:
+      - backend
+      - frontend
+
+networks:
+  kitchenfarmr-network:
+    driver: bridge
