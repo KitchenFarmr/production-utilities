@@ -11,6 +11,8 @@ services:
     restart: always
     container_name: frontend
     image: starlightromero/kitchenfarmr-frontend
+    env_file: 
+      - ./env/frontend.env
     networks:
       - kitchenfarmr-network
     depends_on:
